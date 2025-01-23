@@ -17,7 +17,7 @@
     "commands": [
       {
         "command": "vs-code-plugin.reloadRichPresence",
-        "title": "New Discord Rich Presence: Reload"
+        "title": "Discord Rich Presence: Reload"
       }
     ]
   },
