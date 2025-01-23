@@ -1,7 +1,7 @@
 {
   "name": "vs-code-plugin",
   "displayName": "vs-code-plugin",
-  "description": "",
+  "description": "This extension integrates Discord Rich Presence with Visual Studio Code, providing real-time status updates based on your editor activity. It displays your current file, workspace, and line position on Discord. 🚀",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.96.0"
