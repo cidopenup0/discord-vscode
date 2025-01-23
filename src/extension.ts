@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
 import { Client } from 'discord-rpc';
 
-const clientId = '1331928227782066229'; // Add your Discord app client ID
+const clientId = '1331928227782066229';
 
-let rpc: Client | null = null; // Initialize as null
+let rpc: Client | null = null;
 let startTimestamp = Date.now(); 
 
 const fileTypeImages: { [key: string]: string } = {
@@ -51,7 +51,7 @@ const fileExtensionToLanguageId: { [key: string]: string } = {
     cs: 'csharp',
     'objective-c': 'objective-c',
     cpp: 'cpp',
-    hpp: 'cpp', // C++ headers
+    hpp: 'cpp', 
     dart: 'dart',
     jl: 'julia',
     html: 'html',
