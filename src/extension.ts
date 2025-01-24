@@ -4,7 +4,7 @@ import { Client } from 'discord-rpc';
 const clientId = '1331928227782066229';
 
 let rpc: Client | null = null;
-let startTimestamp = Date.now(); 
+let startTimestamp = Date.now();
 
 const fileTypeImages: { [key: string]: string } = {
     javascript: 'js',
@@ -51,7 +51,7 @@ const fileExtensionToLanguageId: { [key: string]: string } = {
     cs: 'csharp',
     'objective-c': 'objective-c',
     cpp: 'cpp',
-    hpp: 'cpp', 
+    hpp: 'cpp',
     dart: 'dart',
     jl: 'julia',
     html: 'html',
@@ -78,7 +78,7 @@ const fileExtensionToLanguageId: { [key: string]: string } = {
 
 export function activate(context: vscode.ExtensionContext) {
     initializeRichPresence(context);
-    
+
     const reloadCommand = vscode.commands.registerCommand('minimal-discord-rpc.reloadRichPresence', () => {
         vscode.window.showInformationMessage('Reloading Discord Rich Presence...');
         deactivate(); // Clean up existing state
@@ -101,11 +101,13 @@ function initializeRichPresence(context: vscode.ExtensionContext) {
         setActivity();
         vscode.window.onDidChangeActiveTextEditor(setActivity);
         vscode.workspace.onDidCloseTextDocument(setActivity);
-        vscode.window.onDidChangeTextEditorSelection(setActivity);
-        setInterval(setActivity, 10000);
+        setInterval(setActivity, 15000);
     });
 
-    rpc.login({ clientId }).catch(console.error);
+    rpc.login({ clientId }).catch(err => {
+        console.error('Error logging into Discord RPC:', err);
+        vscode.window.showErrorMessage('Failed to activate MinimalDiscord Rich Presence.');
+    });
 
     context.subscriptions.push({
         dispose: () => rpc?.destroy(),
@@ -114,7 +116,6 @@ function initializeRichPresence(context: vscode.ExtensionContext) {
 
 function getLanguageId(fileName: string, languageId: string): string {
     const fileExtension = fileName.split('.').pop()?.toLowerCase() || '';
-    console.log(fileExtension);
     return fileExtensionToLanguageId[fileExtension] || languageId;
 }
 
@@ -140,7 +141,7 @@ function setActivity() {
         const position = `${cursorPosition.line + 1}:${cursorPosition.character + 1}`;
 
         rpc.setActivity({
-            details: `Editing ${fileName} file at line ${position}`,
+            details: `Editing ${fileName} file at ${position}`,
             state: `Workspace: ${workspaceFolderName}`,
             startTimestamp: startTimestamp,
             largeImageKey: imageKey,
