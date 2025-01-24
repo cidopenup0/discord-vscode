@@ -1,4 +1,4 @@
-# 🎮 Discord Rich Presence 
+# 🎮 Minimal Discord Rich Presence 
 
 This extension integrates **Discord Rich Presence** with **Visual Studio Code**, providing real-time status updates based on your editor activity. It displays your current file, workspace, and line position on Discord. 🚀
 
@@ -18,7 +18,7 @@ This extension integrates **Discord Rich Presence** with **Visual Studio Code**,
 1. Open **VS Code**.
 2. Navigate to the **Extensions** view by clicking on the Extensions icon in the Activity Bar. 📂
 3. Search for `Discord Rich Presence`.
-4. Click **Install** on `Discord Rich Presence` by `cidopenup0`.
+4. Click **Install** on `Minimal Discord Rich Presence` by `cidopenup0`.
 
 ## 🖥️ Usage
 
