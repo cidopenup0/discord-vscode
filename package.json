@@ -19,7 +19,7 @@
     "commands": [
       {
         "command": "vs-code-plugin.reloadRichPresence",
-        "title": "Discord Rich Presence: Reload"
+        "title": "Minimal Discord Rich Presence: Reload"
       }
     ]
   },
