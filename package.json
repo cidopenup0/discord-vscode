@@ -12,7 +12,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onst"
+    "*"
   ],
   "main": "./out/extension.js",
   "contributes": {
