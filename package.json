@@ -1,6 +1,6 @@
 {
-  "name": "discord-rich-presence-0",
-  "displayName": "Minimal Discord Rich Presence",
+  "name": "minimal-discord-rpc",
+  "displayName": "Minimal Discord RPC",
   "publisher": "cidopenup0",
   "repository": "https://github.com/cidopenup/vscord",
   "description": "This extension integrates Discord Rich Presence with Visual Studio Code, providing real-time status updates based on your editor activity. It displays your current file, workspace, and line position on Discord. 🚀",
@@ -12,19 +12,19 @@
     "Other"
   ],
   "activationEvents": [
-    "onStartupFinished"
+    "onst"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "vs-code-plugin.reloadRichPresence",
-        "title": "Minimal Discord Rich Presence: Reload"
+        "command": "minimal-discord-rpc.reloadRichPresence",
+        "title": "Minimal Discord RPC: Reload"
       }
     ]
   },
   "scripts": {
-    "vscode:prepublish": "tsc -p ./",
+    "vscode:prepublish": "npm run build",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",

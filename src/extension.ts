@@ -79,7 +79,7 @@ const fileExtensionToLanguageId: { [key: string]: string } = {
 export function activate(context: vscode.ExtensionContext) {
     initializeRichPresence(context);
     
-    const reloadCommand = vscode.commands.registerCommand('vs-code-plugin.reloadRichPresence', () => {
+    const reloadCommand = vscode.commands.registerCommand('minimal-discord-rpc.reloadRichPresence', () => {
         vscode.window.showInformationMessage('Reloading Discord Rich Presence...');
         deactivate(); // Clean up existing state
         initializeRichPresence(context); // Reinitialize
@@ -96,7 +96,7 @@ function initializeRichPresence(context: vscode.ExtensionContext) {
     rpc = new Client({ transport: 'ipc' });
 
     rpc.on('ready', () => {
-        vscode.window.showInformationMessage('Discord Rich Presence activated!');
+        vscode.window.showInformationMessage('Minimal Discord Rich Presence activated!');
         startTimestamp = Date.now();
         setActivity();
         vscode.window.onDidChangeActiveTextEditor(setActivity);
