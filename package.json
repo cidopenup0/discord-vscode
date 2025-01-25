@@ -4,6 +4,7 @@
   "publisher": "cidopenup0",
   "repository": "https://github.com/cidopenup/vscord",
   "description": "This extension integrates Discord Rich Presence with Visual Studio Code, providing real-time status updates based on your editor activity. It displays your current file, workspace, and line position on Discord. 🚀",
+  "icon": "icon.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.96.0"

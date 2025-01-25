@@ -27,11 +27,6 @@ Once the extension is installed:
 1. It will automatically track your file and workspace activity. 🎉
 2. You can reload the Discord status by running the **Reload Rich Presence** command.
 
-## 👀 Preview
-![Preview](preview_1.png)
-![Preview](preview_2.png)
-![Preview](preview_3.png)
-
 ## 🤝 Contributing
 
 To contribute to this repository, feel free to create a new fork of the repository and submit a pull request. 💡
