@@ -35,7 +35,7 @@ To contribute to this repository, feel free to create a new fork of the reposito
 2. 🌿 Create a new branch in your fork.
 3. ✍️ Make your changes.
 4. ✅ Commit your changes and push them.
-5. 📥 Submit a Pull Request [here](https://github.com/cidopenup/vscord/pulls)!
+5. 📥 Submit a Pull Request [here](https://github.com/cidopenup/discord-vscode/pulls)!
 
 ## 💖 Thanks
 -   📦 [discordjs-rpc](https://github.com/discordjs/RPC) - Creator of Discord RPC Client
