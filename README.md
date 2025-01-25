@@ -42,3 +42,6 @@ To contribute to this repository, feel free to create a new fork of the reposito
 
 ## 🌟 Inspriation
 -   🐐 [leonardssh](https://github.com/leonardssh) - Creator of [vscord](https://github.com/leonardssh/vscord/tree/main/assets/icons)
+
+## ⭐ Show Your Support
+-  💫 If you found this project helpful, please consider giving it a star on Github! Your support helps improve the project and motivates further development. Thank you! 🙏
