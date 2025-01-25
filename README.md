@@ -39,4 +39,6 @@ To contribute to this repository, feel free to create a new fork of the reposito
 
 ## 💖 Thanks
 -   📦 [discordjs-rpc](https://github.com/discordjs/RPC) - Creator of Discord RPC Client
--   👤 [cidopenup](https://github.com/cidopenup) - Creator of [vscord](https://github.com/cidopenup/vscord)
+
+## 🌟 Inspriation
+-   🐐 [leonardssh](https://github.com/leonardssh) - Creator of [vscord](https://github.com/leonardssh/vscord/tree/main/assets/icons)
