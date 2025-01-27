@@ -3,7 +3,7 @@
   "displayName": "Minimal Discord RPC",
   "publisher": "cidopenup0",
   "repository": "https://github.com/cidopenup/discord-vscode",
-  "description": "Update Discord status using minimal rich presence integration.",
+  "description": "Integrates Discord Rich Presence with VS Code for real-time activity sharing.",
   "icon": "icon.png",
   "version": "0.0.3",
   "engines": {
