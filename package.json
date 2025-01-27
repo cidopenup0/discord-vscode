@@ -5,7 +5,7 @@
   "repository": "https://github.com/cidopenup/discord-vscode",
   "description": "Update Discord status using minimal rich presence integration.",
   "icon": "icon.png",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.96.0"
   },
