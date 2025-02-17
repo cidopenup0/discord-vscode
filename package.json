@@ -19,8 +19,16 @@
   "contributes": {
     "commands": [
       {
-        "command": "minimal-discord-rpc.reloadRichPresence",
+        "command": "minimal-discord-rpc.reload",
         "title": "Minimal Discord RPC: Reload"
+      },
+      {
+        "command": "minimal-discord-rpc.disconnect",
+        "title": "Minimal Discord RPC: Disconnect"
+      },
+      {
+        "command": "minimal-discord-rpc.reconnect",
+        "title": "Minimal Discord RPC: Reconnect"
       }
     ]
   },
