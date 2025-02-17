@@ -81,7 +81,8 @@ export function activate(context: vscode.ExtensionContext) {
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     statusBarItem.tooltip = 'Minimal RPC Status';
     initializeRichPresence(context);
-
+    
+    // TODO : fix that something is off in this code, RPC updating 15 seconds later
     context.subscriptions.push(
         vscode.commands.registerCommand('minimal-discord-rpc.reload', () => reloadRichPresence(context)),
         vscode.commands.registerCommand('minimal-discord-rpc.disconnect', () => disconnectRichPresence()),
