@@ -3,10 +3,7 @@ import { Client } from 'discord-rpc';
 
 const clientId = '1331928227782066229';
 
-let rpc: Client | null = null;
-let startTimestamp = Date.now();
-
-const fileTypeImages: { [key: string]: string } = {
+const fileTypeImages: Record<string, string> = {
     javascript: 'js',
     typescript: 'ts',
     python: 'python',
@@ -41,7 +38,7 @@ const fileTypeImages: { [key: string]: string } = {
     default: 'idle-keyboard',
 };
 
-const fileExtensionToLanguageId: { [key: string]: string } = {
+const fileExtensionToLanguageId: Record<string, string> = {
     js: 'javascript',
     ts: 'typescript',
     py: 'python',
@@ -76,42 +73,108 @@ const fileExtensionToLanguageId: { [key: string]: string } = {
     gitignore: 'git',
 };
 
+let rpc: Client | null = null;
+let startTimestamp = Date.now();
+let statusBarItem: vscode.StatusBarItem;
+let isConnected = false;
+
 export function activate(context: vscode.ExtensionContext) {
+    statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+    statusBarItem.tooltip = 'Minimal RPC Status';
+    statusBarItem.show();
+
+    // Initialize Discord Rich Presence
     initializeRichPresence(context);
 
-    const reloadCommand = vscode.commands.registerCommand('minimal-discord-rpc.reloadRichPresence', () => {
-        vscode.window.showInformationMessage('Reloading Discord Rich Presence...');
-        deactivate(); // Clean up existing state
-        initializeRichPresence(context); // Reinitialize
-    });
-
-    context.subscriptions.push(reloadCommand);
+    // Register Commands
+    context.subscriptions.push(
+        vscode.commands.registerCommand('minimal-discord-rpc.reload', () => reloadRichPresence(context)),
+        vscode.commands.registerCommand('minimal-discord-rpc.disconnect', () => disconnectRichPresence()),
+        vscode.commands.registerCommand('minimal-discord-rpc.reconnect', () => reconnectRichPresence(context)),
+    );
 }
 
-function initializeRichPresence(context: vscode.ExtensionContext) {
+async function initializeRichPresence(context: vscode.ExtensionContext) {
     if (rpc) {
         rpc.destroy();
     }
 
     rpc = new Client({ transport: 'ipc' });
 
+    let connectionTimeout: NodeJS.Timeout | null = null;
+
     rpc.on('ready', () => {
-        vscode.window.showInformationMessage('Minimal Discord Rich Presence activated!');
         startTimestamp = Date.now();
-        setActivity();
-        vscode.window.onDidChangeActiveTextEditor(setActivity);
-        vscode.workspace.onDidCloseTextDocument(setActivity);
-        setInterval(setActivity, 15000);
+        updateActivity();
+        vscode.window.onDidChangeActiveTextEditor(updateActivity);
+        vscode.workspace.onDidCloseTextDocument(updateActivity);
+        vscode.workspace.onDidChangeNotebookDocument(updateActivity);
+        setInterval(updateActivity, 15000);
+
+        statusBarItem.tooltip = 'Click to disconnect from Discord gateway';
+        statusBarItem.text = '$(sparkle) Connected to Discord';
+        statusBarItem.command = 'minimal-discord-rpc.disconnect';
+
+        // The status update after 5 seconds if RPC stays connected
+        connectionTimeout = setTimeout(() => {
+            if (isConnected) {
+                statusBarItem.text = '$(rss)';
+            }
+        }, 5000);
+
+        isConnected = true;
     });
 
-    rpc.login({ clientId }).catch(err => {
-        console.error('Error logging into Discord RPC:', err);
-        vscode.window.showErrorMessage('Failed to activate MinimalDiscord Rich Presence.');
+    rpc.on('disconnected', () => {
+        if (connectionTimeout) {
+            clearTimeout(connectionTimeout); // Clear the timeout if disconnected
+        }
+
+        statusBarItem.tooltip = 'Click to reconnect to Discord gateway';
+        statusBarItem.text = '$(refresh) Reconnect to Discord';
+        statusBarItem.command = 'minimal-discord-rpc.reconnect';
+        rpc?.destroy();
+        isConnected = false;
     });
+
+    try {
+        await rpc.login({ clientId });        
+    } catch (err) {
+        handleError(err, context);
+    }
 
     context.subscriptions.push({
         dispose: () => rpc?.destroy(),
     });
+}
+
+let hasTriedConnection = false;
+
+function handleError(err: unknown, context: vscode.ExtensionContext) {
+    let errorMessage = 'Failed to activate Minimal Discord Rich Presence due to an unknown error.';
+
+    if (err instanceof Error) {
+        console.error('Error logging into Discord RPC:', err);
+        errorMessage = `Failed to activate Minimal Discord Rich Presence: ${err.message}`;
+    } else {
+        console.error('Unknown error occurred', err);
+    }
+
+    if (!hasTriedConnection) {
+        vscode.window.showErrorMessage(errorMessage, 'Try Again').then((selection) => {
+            if (selection === 'Try Again') {
+                reconnectRichPresence(context);
+            }
+        });
+        
+        hasTriedConnection = true; 
+    } else {
+       vscode.window.showErrorMessage(errorMessage);
+    }
+
+    statusBarItem.tooltip = 'Click to reconnect to Discord gateway';
+    statusBarItem.text = '$(refresh) Reconnect to Discord';
+    statusBarItem.command = 'minimal-discord-rpc.reconnect';
 }
 
 function getLanguageId(fileName: string, languageId: string): string {
@@ -119,7 +182,7 @@ function getLanguageId(fileName: string, languageId: string): string {
     return fileExtensionToLanguageId[fileExtension] || languageId;
 }
 
-function setActivity() {
+function updateActivity() {
     if (!rpc) {
         return;
     }
@@ -160,9 +223,32 @@ function setActivity() {
     }
 }
 
+function reloadRichPresence(context: vscode.ExtensionContext) {
+    vscode.window.showInformationMessage('Reloading Discord Rich Presence...');
+    deactivate();
+    initializeRichPresence(context);
+}
+
+function disconnectRichPresence() {
+    deactivate();
+}
+
+function reconnectRichPresence(context: vscode.ExtensionContext) {
+    statusBarItem.text = "$(sync) Connecting to Discord...";
+    statusBarItem.tooltip = "Connecting to Discord...";
+    initializeRichPresence(context);
+    statusBarItem.tooltip = isConnected ? 'Click to disconnect from Discord gateway' : 'Click to reconnect to Discord gateway';
+    statusBarItem.text = isConnected ? '$(sparkle) Connected to Discord' : '$(refresh) Reconnect to Discord';
+    statusBarItem.command = isConnected ? 'minimal-discord-rpc.disconnect' : 'minimal-discord-rpc.reconnect';
+}
+
 export function deactivate() {
     if (rpc) {
         rpc.destroy();
         rpc = null;
+        isConnected = false;
+        statusBarItem.tooltip = 'Click to reconnect to Discord gateway';
+        statusBarItem.text = '$(refresh) Reconnect to Discord';
+        statusBarItem.command = 'minimal-discord-rpc.reconnect';
     }
 }

@@ -2,16 +2,31 @@
   "name": "minimal-discord-rpc",
   "displayName": "Minimal Discord RPC",
   "publisher": "cidopenup0",
-  "repository": "https://github.com/cidopenup/discord-vscode",
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/cidopenup/discord-vscode"
+	},
   "description": "Integrates Discord Rich Presence with VS Code for real-time activity sharing.",
-  "icon": "icon.png",
-  "version": "0.0.3",
+  "icon": "assets/icon.png",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.96.0"
   },
-  "categories": [
-    "Other"
-  ],
+	"bugs": {
+		"url": "https://github.com/cidopenup/discord-vscode/issues"
+	},
+	"keywords": [
+    "minimal",
+		"discord",
+		"vscode",
+		"rich",
+		"presence",
+		"rich presence",
+		"rpc"
+	],
+	"categories": [
+		"Other"
+	],
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -19,8 +34,16 @@
   "contributes": {
     "commands": [
       {
-        "command": "minimal-discord-rpc.reloadRichPresence",
+        "command": "minimal-discord-rpc.reload",
         "title": "Minimal Discord RPC: Reload"
+      },
+      {
+        "command": "minimal-discord-rpc.disconnect",
+        "title": "Minimal Discord RPC: Disconnect"
+      },
+      {
+        "command": "minimal-discord-rpc.reconnect",
+        "title": "Minimal Discord RPC: Reconnect"
       }
     ]
   },
