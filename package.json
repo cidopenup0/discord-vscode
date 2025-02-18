@@ -20,15 +20,15 @@
     "commands": [
       {
         "command": "minimal-discord-rpc.reload",
-        "title": "Minimaldiscord RPC: Reload"
+        "title": "Minimal Discord RPC: Reload"
       },
       {
         "command": "minimal-discord-rpc.disconnect",
-        "title": "Minimaldiscord RPC: Disconnect"
+        "title": "Minimal Discord RPC: Disconnect"
       },
       {
         "command": "minimal-discord-rpc.reconnect",
-        "title": "Minimaldiscord RPC: Reconnect"
+        "title": "Minimal Discord RPC: Reconnect"
       }
     ]
   },
