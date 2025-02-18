@@ -110,6 +110,13 @@ async function initializeRichPresence(context: vscode.ExtensionContext) {
         statusBarItem.show();
     });
 
+    rpc.on('disconnected', () => {
+        statusBarItem.text = '$(refresh) Reconnect to discord';
+        statusBarItem.command = 'minimal-discord-rpc.reconnect';
+        statusBarItem.show();
+        rpc?.destroy();
+    });
+
     rpc.login({ clientId }).catch(err => {
         handleError(err);
     });
@@ -180,8 +187,6 @@ function updateActivity() {
 }
 
 function reloadRichPresence(context: vscode.ExtensionContext) {
-    statusBarItem.text = "$(search-refresh) Connecting to Discord...";
-    statusBarItem.tooltip = "Connecting to Discord...";
     vscode.window.showInformationMessage('Reloading Discord Rich Presence...');
     deactivate();
     initializeRichPresence(context);
@@ -192,7 +197,10 @@ function disconnectRichPresence() {
 }
 
 function reconnectRichPresence(context: vscode.ExtensionContext) {
+    statusBarItem.text = "$(search-refresh) Connecting to Discord...";
+    statusBarItem.tooltip = "Connecting to Discord...";
     initializeRichPresence(context);
+    statusBarItem.tooltip = isConnected ? 'Click to disconnect from discord gateway' : 'Click to connect to discord gateway';
     statusBarItem.text = isConnected ? '$(flame) Connected to discord' : '$(refresh) Reconnect to discord';
     statusBarItem.command = isConnected ? 'minimal-discord-rpc.disconnect' : 'minimal-discord-rpc.reconnect';
     statusBarItem.show();
