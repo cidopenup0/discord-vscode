@@ -11,11 +11,11 @@ This extension seamlessly integrates **Discord Rich Presence** with **Visual Stu
 
 ## 🧰 Commands  
 
-- **🔄 Reload Rich Presence**: Refreshes the Rich Presence with updated information.
-- **🔌 Reconnect Rich Presence**: Re-establishes the connection to Discord if it was lost.
-- **❌ Disconnect Rich Presence**: Stops the Rich Presence connection to Discord.  
+- **🔄 Reload**: Refreshes the Rich Presence with updated information.
+- **🔌 Reconnect**: Re-establishes the connection to Discord if it was lost.
+- **❌ Disconnect**: Stops the Rich Presence connection to Discord.  
 
-## 📦 Installation  
+## ⬇️ Installation  
 
 Launch **VS Code Quick Open** (`Ctrl+P`), paste the following command, and press enter:  
    ```
@@ -25,14 +25,15 @@ Launch **VS Code Quick Open** (`Ctrl+P`), paste the following command, and press
 **OR**
 
 1. Open **VS Code**.  
-2. Navigate to the **Extensions** view by clicking on the Extensions icon in the Activity Bar. 📂  
-3. Search for `Minimal Discord Rich Presence`.  
-4. Click **Install** on `Minimal Discord Rich Presence` by `cidopenup0`.  
+2. Navigate to the **Extensions** view by clicking on the Extensions icon in the Activity Bar.  
+3. Search for `Minimal Discord RPC`.  
+4. Click **Install** on `Minimal Discord RPC` by `cidopenup0`.
+5. Rate Five Stars - ⭐⭐⭐⭐⭐  
 
 ## 🖥️ Usage  
 
 Once installed, the extension will automatically track your file and workspace activity. 🎉  
-To manually refresh the Discord status, run the **Reload Rich Presence** command.  
+To manually refresh the Discord status, run the **Minimal Discord RPC: Reload** command.  
 
 ## 🤝 Contributing  
 
@@ -54,5 +55,5 @@ We welcome contributions to enhance this project!
 
 ## ⭐ Show Your Support  
 
-💫 If you find this project useful, consider giving it a star on GitHub! Your support helps improve the project and motivates further development. Thank you! 🙏
+💫 If you find this project useful, consider giving it a star on GitHub! Your support helps improve the project and motivates further development. Thank you!
 
