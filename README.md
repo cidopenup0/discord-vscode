@@ -26,8 +26,8 @@ Launch **VS Code Quick Open** (`Ctrl+P`), paste the following command, and press
 
 1. Open **VS Code**.  
 2. Navigate to the **Extensions** view by clicking on the Extensions icon in the Activity Bar. 📂  
-3. Search for `Minimal Discord Rich Presence`.  
-4. Click **Install** on `Minimal Discord Rich Presence` by `cidopenup0`.  
+3. Search for `Minimal Discord RPC`.  
+4. Click **Install** on `Minimal Discord RPC` by `cidopenup0`.  
 
 ## 🖥️ Usage  
 
