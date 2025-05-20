@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { Client } from 'discord-rpc';
+import simpleGit from 'simple-git';
 
 const clientId = '1331928227782066229';
 
@@ -76,6 +77,7 @@ const fileExtensionToLanguageId: Record<string, string> = {
 let rpc: Client | null = null;
 let startTimestamp = Date.now();
 let statusBarItem: vscode.StatusBarItem;
+let githubStatusBarItem: vscode.StatusBarItem;
 let isConnected = false;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -92,6 +94,26 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.registerCommand('minimal-discord-rpc.disconnect', () => disconnectRichPresence()),
         vscode.commands.registerCommand('minimal-discord-rpc.reconnect', () => reconnectRichPresence(context)),
     );
+}
+
+async function getGitRemoteUrl(): Promise<string | undefined> {
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+
+    if (!workspaceFolders || workspaceFolders.length === 0) {
+        return undefined;
+    }
+
+    const workspacePath = workspaceFolders[0].uri.fsPath;
+    try {
+        const git = simpleGit(workspacePath);
+        const remotes = await git.getRemotes(true);
+        const origin = remotes.find(remote =>
+            remote.name === 'origin' || (remote.refs.fetch && remote.refs.fetch.includes('github.com'))) || remotes[0];
+        return origin?.refs.fetch;
+    } catch (error) {
+        console.debug('Minimal Discord RPC => Failed to get Git remote URL using simple-git: ',error);
+        return undefined;
+    }
 }
 
 async function initializeRichPresence(context: vscode.ExtensionContext) {
@@ -154,7 +176,7 @@ function handleError(err: unknown, context: vscode.ExtensionContext) {
     let errorMessage = 'Failed to activate Minimal Discord Rich Presence due to an unknown error.';
 
     if (err instanceof Error) {
-        console.error('Error logging into Discord RPC:', err);
+        console.error('Error logging into Minimal Discord RPC:', err);
         errorMessage = `Failed to activate Minimal Discord Rich Presence: ${err.message}`;
     } else {
         console.error('Unknown error occurred', err);
@@ -182,7 +204,7 @@ function getLanguageId(fileName: string, languageId: string): string {
     return fileExtensionToLanguageId[fileExtension] || languageId;
 }
 
-function updateActivity() {
+async function updateActivity() {
     if (!rpc) {
         return;
     }
@@ -194,6 +216,8 @@ function updateActivity() {
         const workspaceFolder = vscode.workspace.workspaceFolders[0];
         workspaceFolderName = workspaceFolder.name;
     }
+    const url = await getGitRemoteUrl();
+    const normalizedUrl = url ? url.replace(/^git@github\.com:/, 'https://github.com/').replace(/\.git$/, '') : undefined;
 
     if (editor) {
         const fileName = editor.document.fileName.split(/[/\\]/).pop() || '';
@@ -211,6 +235,9 @@ function updateActivity() {
             largeImageText: `Editing a ${fileType.toUpperCase()} File`,
             smallImageKey: 'vscode',
             smallImageText: 'Visual Studio Code',
+            buttons: normalizedUrl ? [
+                { label: 'View Repository', url: normalizedUrl }
+            ] : undefined
         });
     } else {
         rpc.setActivity({
@@ -252,3 +279,7 @@ export function deactivate() {
         statusBarItem.command = 'minimal-discord-rpc.reconnect';
     }
 }
+function execAsync(arg0: string, arg1: { cwd: string; }): { stdout: any; } | PromiseLike<{ stdout: any; }> {
+    throw new Error('Function not implemented.');
+}
+
