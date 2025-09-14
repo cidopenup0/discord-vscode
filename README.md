@@ -28,7 +28,7 @@ Launch **VS Code Quick Open** (`Ctrl+P`), paste the following command, and press
 2. Navigate to the **Extensions** view by clicking on the Extensions icon in the Activity Bar.  
 3. Search for `Minimal Discord RPC`.  
 4. Click **Install** on `Minimal Discord RPC` by `cidopenup0`.
-5. Rate Five Stars - ⭐⭐⭐⭐⭐  
+5. Rate Five Stars if you liked this extension - ⭐⭐⭐⭐⭐  
 
 ## 🖥️ Usage  
 
