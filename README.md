@@ -48,7 +48,7 @@ To contribute to this repository, feel free to create a new fork of the reposito
 -   📦 [discordjs-rpc](https://github.com/discordjs/RPC) - Creator of Discord RPC Client
 
 ## 🌟 Inspriation
--   🐐 [narcisbugeag](https://github.com/narcisbugeag) - Creator of [VSCord](https://github.com/narcisbugeag/vscord/tree/main/assets/icons)
+-   🐐 [narcisbugeag](https://github.com/narcisbugeag) - Creator of [VSCord](https://github.com/narcisbugeag/vscord/)
 
 ## ⭐ Show Your Support  
 
