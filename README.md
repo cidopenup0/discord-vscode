@@ -1,5 +1,14 @@
-# Minimal Discord Rich Presence
+<div align="center">
+  <img src="assets/icon_transparent.png" alt="Icon" width="300">
 
+
+![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/cidopenup0.minimal-discord-rpc?label=Visual%20Studio%20Marketplace&color=blue)
+![Downloads](https://img.shields.io/visual-studio-marketplace/d/cidopenup0.minimal-discord-rpc?label=downloads&color=green)
+![Installs](https://img.shields.io/visual-studio-marketplace/i/cidopenup0.minimal-discord-rpc?label=installs&color=green)
+![Rating](https://img.shields.io/visual-studio-marketplace/r/cidopenup0.minimal-discord-rpc?label=rating&color=brightgreen)
+</div>
+
+# Minimal Discord Rich Presence
 Minimal Discord Rich Presence connects **Visual Studio Code** with **Discord Rich Presence**, showing what you’re working on in real time. It updates your Discord status with your current file, workspace, and cursor position as you code.
 
 ## Features
@@ -8,6 +17,20 @@ Minimal Discord Rich Presence connects **Visual Studio Code** with **Discord Ric
 * Displays the name of the workspace you’re working in
 * Updates your Discord status based on the type of file you’re editing (JavaScript, Python, TypeScript, and more)
 * Can be reloaded at any time to refresh activity tracking
+## Preview
+## Preview
+
+<div style="text-align:left">
+  <img src="assets/previews/idle.png" width="400">
+</div>
+
+<div style="text-align:left">
+  <img src="assets/previews/work1.png" width="400">
+</div>
+
+<div style="text-align:left">
+  <img src="assets/previews/work2.png" width="400">
+</div>
 
 ## Commands
 
