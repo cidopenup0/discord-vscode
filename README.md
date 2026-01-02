@@ -18,8 +18,6 @@ Minimal Discord Rich Presence connects **Visual Studio Code** with **Discord Ric
 * Updates your Discord status based on the type of file you’re editing (JavaScript, Python, TypeScript, and more)
 * Can be reloaded at any time to refresh activity tracking
 ## Preview
-## Preview
-
 <div style="text-align:left">
   <img src="assets/previews/idle.png" width="400">
 </div>
