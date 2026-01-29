@@ -2,10 +2,10 @@
   <img src="assets/icon_transparent.png" alt="Icon" width="300">
 
 
-![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/cidopenup0.minimal-discord-rpc?label=Visual%20Studio%20Marketplace&color=blue)
-![Downloads](https://img.shields.io/visual-studio-marketplace/d/cidopenup0.minimal-discord-rpc?label=downloads&color=green)
-![Installs](https://img.shields.io/visual-studio-marketplace/i/cidopenup0.minimal-discord-rpc?label=installs&color=green)
-![Rating](https://img.shields.io/visual-studio-marketplace/r/cidopenup0.minimal-discord-rpc?label=rating&color=brightgreen)
+![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/cidopenup0.minimal-discord-rpc?label=Visual%20Studio%20Marketplace&color=blue?cacheSeconds=86400)
+![Downloads](https://img.shields.io/visual-studio-marketplace/d/cidopenup0.minimal-discord-rpc?label=downloads&color=green?cacheSeconds=86400)
+![Installs](https://img.shields.io/visual-studio-marketplace/i/cidopenup0.minimal-discord-rpc?label=installs&color=green?cacheSeconds=86400)
+![Rating](https://img.shields.io/visual-studio-marketplace/r/cidopenup0.minimal-discord-rpc?label=rating&color=brightgreen?cacheSeconds=86400)
 </div>
 
 # Minimal Discord Rich Presence
