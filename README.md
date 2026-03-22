@@ -15,6 +15,8 @@ Minimal Discord Rich Presence connects **Visual Studio Code** with **Discord Ric
 
 * Shows the file you’re currently editing and your cursor position
 * Displays the name of the workspace you’re working in
+* Detects your current Git repository and shows it in your Rich Presence state
+* Adds an **Open Repository** button in Discord Rich Presence when a repository remote is available
 * Updates your Discord status based on the type of file you’re editing (JavaScript, Python, TypeScript, and more)
 * Can be reloaded at any time to refresh activity tracking
 ## Preview
@@ -56,6 +58,14 @@ Or install it manually:
 Once installed, the extension starts tracking your editor activity automatically.
 If you want to manually update your Discord status, just run the **Reload Rich Presence** command.
 
+### Repository Button in Rich Presence
+
+The extension checks whether your active workspace is a Git repository.
+
+* If a repository exists and has an `origin` remote URL, Rich Presence includes an **Open Repository** button linking to that repository.
+* SSH remotes such as `git@github.com:user/repo.git` are converted to an HTTPS link for Discord.
+* If no repository (or no `origin` remote) is found, the repository button is not shown.
+
 ## Contributing
 
 Contributions are welcome. If you’d like to help improve the project:
@@ -64,11 +74,12 @@ Contributions are welcome. If you’d like to help improve the project:
 2. Create a new branch for your changes
 3. Make your updates
 4. Commit and push your changes
-5. Open a pull request [here](https://github.com/cidopenup/discord-vscode/pulls)
+5. Open a pull request [here](https://github.com/cidopenup0/discord-vscode/pulls)
 
 ## Thanks
 
-* [discordjs-rpc](https://github.com/discordjs/RPC) — Discord RPC client library
+* [@xhayper/discord-rpc](https://github.com/xhayper/discord-rpc) — Discord RPC client library
+* [simple-git](https://github.com/steveukx/git-js) — Git wrapper used for repository detection and remote URL handling
 
 ## Inspiration
 
