@@ -1,0 +1,115 @@
+export const clientId = '1331928227782066229';
+
+export const COMMANDS = {
+    reload: 'minimal-discord-rpc.reload',
+    disconnect: 'minimal-discord-rpc.disconnect',
+    reconnect: 'minimal-discord-rpc.reconnect',
+} as const;
+
+export const RPC_TIMINGS = {
+    activityUpdateIntervalMs: 15000,
+    compactConnectedStatusDelayMs: 5000,
+} as const;
+
+export const STATUS_BAR = {
+    initialTooltip: 'Minimal RPC Status',
+    connectingText: '$(sync) Connecting to Discord...',
+    connectingTooltip: 'Connecting to Discord...',
+    connectedText: '$(sparkle) Connected to Discord',
+    connectedTooltip: 'Click to disconnect from Discord gateway',
+    connectedCompactText: '$(rss)',
+    reconnectText: '$(refresh) Reconnect to Discord',
+    reconnectTooltip: 'Click to reconnect to Discord gateway',
+} as const;
+
+export const UI_MESSAGES = {
+    reloadInfo: 'Reloading Discord Rich Presence...',
+    unknownActivationError: 'Failed to activate Minimal Discord Rich Presence due to an unknown error.',
+    activationErrorPrefix: 'Failed to activate Minimal Discord Rich Presence:',
+    tryAgainAction: 'Try Again',
+} as const;
+
+export const PRESENCE = {
+    noWorkspace: 'No Workspace',
+    workspacePrefix: 'Workspace: ',
+    editingPrefix: 'Editing ',
+    editingSuffix: ' file at ',
+    fileTypeTextPrefix: 'Editing a ',
+    fileTypeTextSuffix: ' File',
+    notEditingState: 'Not editing a file',
+    vscodeSmallImageKey: 'vscode',
+    vscodeSmallImageText: 'Visual Studio Code',
+    idleLargeImageKey: 'idle-keyboard',
+    idleSmallImageKey: 'idle',
+    idleSmallImageText: 'Idling',
+} as const;
+
+export const fileTypeImages: Record<string, string> = {
+    javascript: 'js',
+    typescript: 'ts',
+    python: 'python',
+    java: 'java',
+    c: 'c',
+    csharp: 'csharp',
+    'objective-c': 'objective-c',
+    cpp: 'cpp',
+    dart: 'dart',
+    julia: 'julia',
+    r: 'r',
+    html: 'html',
+    css: 'css',
+    json: 'json',
+    jsonc: 'json',
+    markdown: 'markdown',
+    lua: 'lua',
+    kotlin: 'kotlin',
+    log: 'log',
+    gradle: 'gradle',
+    go: 'go',
+    properties: 'env',
+    jupyter: 'jupyter',
+    javascriptreact: 'jsx',
+    typescriptreact: 'tsx',
+    plaintext: 'text',
+    xml: 'xml',
+    swift: 'swift',
+    vue: 'vue',
+    sql: 'sql',
+    git: 'git',
+    default: 'idle-keyboard',
+};
+
+export const fileExtensionToLanguageId: Record<string, string> = {
+    js: 'javascript',
+    ts: 'typescript',
+    py: 'python',
+    java: 'java',
+    c: 'c',
+    h: 'c',
+    cs: 'csharp',
+    'objective-c': 'objective-c',
+    cpp: 'cpp',
+    hpp: 'cpp',
+    dart: 'dart',
+    jl: 'julia',
+    html: 'html',
+    css: 'css',
+    json: 'json',
+    jsonc: 'json',
+    md: 'markdown',
+    lua: 'lua',
+    kt: 'kotlin',
+    log: 'log',
+    gradle: 'gradle',
+    go: 'go',
+    env: 'properties',
+    ipynb: 'jupyter',
+    jsx: 'javascriptreact',
+    tsx: 'typescriptreact',
+    txt: 'plaintext',
+    xml: 'xml',
+    swift: 'swift',
+    vue: 'vue',
+    sql: 'sql',
+    gitignore: 'git',
+};
