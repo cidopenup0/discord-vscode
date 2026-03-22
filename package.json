@@ -4,7 +4,7 @@
   "publisher": "cidopenup0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cidopenup/discord-vscode"
+    "url": "https://github.com/cidopenup0/discord-vscode"
   },
   "description": "Integrates Discord Rich Presence with VS Code for real-time activity sharing.",
   "icon": "assets/icon.png",
@@ -13,7 +13,7 @@
     "vscode": "^1.96.0"
   },
   "bugs": {
-    "url": "https://github.com/cidopenup/discord-vscode/issues"
+    "url": "https://github.com/cidopenup0/discord-vscode/issues"
   },
   "keywords": [
     "minimal",
@@ -66,6 +66,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@xhayper/discord-rpc": "^1.1.8"
+    "@xhayper/discord-rpc": "^1.1.8",
+    "simple-git": "^3.33.0"
   }
 }
