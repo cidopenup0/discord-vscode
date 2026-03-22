@@ -48,7 +48,8 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "tsc -p ./",
+    "vscode:prepublish": "npm run bundle",
+    "bundle": "node esbuild.js",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
@@ -62,6 +63,7 @@
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
     "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.1",
     "eslint": "^9.16.0",
     "typescript": "^5.7.2"
   },
