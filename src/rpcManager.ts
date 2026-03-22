@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { Client } from '@xhayper/discord-rpc';
+import { simpleGit } from 'simple-git';
 import {
     clientId,
     COMMANDS,
@@ -20,6 +21,8 @@ export class DiscordRpcManager {
     private readonly rpcDisposables: vscode.Disposable[] = [];
     private reconnectInProgress = false;
     private hasTriedConnection = false;
+    private repositoryUrl: string | null = null;
+    private repositoryName: string | null = null;
 
     constructor(
         private readonly context: vscode.ExtensionContext,
@@ -190,11 +193,30 @@ export class DiscordRpcManager {
 
         const editor = vscode.window.activeTextEditor;
         let workspaceFolderName: string = PRESENCE.noWorkspace;
+        let workspaceFolderPath: string | null = null;
 
         if (vscode.workspace.workspaceFolders) {
-            const workspaceFolder = vscode.workspace.workspaceFolders[0];
+            const workspaceFolder = editor
+                ? vscode.workspace.getWorkspaceFolder(editor.document.uri) || vscode.workspace.workspaceFolders[0]
+                : vscode.workspace.workspaceFolders[0];
+
             workspaceFolderName = workspaceFolder.name;
+            workspaceFolderPath = workspaceFolder.uri.fsPath;
         }
+
+        void this.setActivityWithRepositoryData(editor, workspaceFolderName, workspaceFolderPath);
+    }
+
+    private async setActivityWithRepositoryData(
+        editor: vscode.TextEditor | undefined,
+        workspaceFolderName: string,
+        workspaceFolderPath: string | null,
+    ) {
+        await this.refreshRepositoryInfo(workspaceFolderPath);
+
+        const repoState = this.repositoryName
+            ? `${PRESENCE.repositoryPrefix}${this.repositoryName}`
+            : PRESENCE.noRepositoryState;
 
         if (editor) {
             const fileName = editor.document.fileName.split(/[/\\]/).pop() || '';
@@ -203,24 +225,114 @@ export class DiscordRpcManager {
 
             const cursorPosition = editor.selection.active;
             const position = `${cursorPosition.line + 1}:${cursorPosition.character + 1}`;
+            const state = this.repositoryName ? repoState : `${PRESENCE.workspacePrefix}${workspaceFolderName}`;
 
-            void this.rpc.user.setActivity({
+            void this.rpc?.user?.setActivity({
                 details: `${PRESENCE.editingPrefix}${fileName}${PRESENCE.editingSuffix}${position}`,
-                state: `${PRESENCE.workspacePrefix}${workspaceFolderName}`,
+                state,
                 startTimestamp: this.startTimestamp,
                 largeImageKey: imageKey,
                 largeImageText: `${PRESENCE.fileTypeTextPrefix}${fileType.toUpperCase()}${PRESENCE.fileTypeTextSuffix}`,
                 smallImageKey: PRESENCE.vscodeSmallImageKey,
                 smallImageText: PRESENCE.vscodeSmallImageText,
+                ...(this.repositoryUrl
+                    ? {
+                          buttons: [
+                              {
+                                  label: PRESENCE.repositoryButtonLabel,
+                                  url: this.repositoryUrl,
+                              },
+                          ],
+                      }
+                    : {}),
             });
-        } else {
-            void this.rpc.user.setActivity({
-                state: PRESENCE.notEditingState,
-                startTimestamp: this.startTimestamp,
-                largeImageKey: PRESENCE.idleLargeImageKey,
-                smallImageKey: PRESENCE.idleSmallImageKey,
-                smallImageText: PRESENCE.idleSmallImageText,
-            });
+
+            return;
         }
+
+        void this.rpc?.user?.setActivity({
+            state: this.repositoryName ? repoState : PRESENCE.notEditingState,
+            startTimestamp: this.startTimestamp,
+            largeImageKey: PRESENCE.idleLargeImageKey,
+            smallImageKey: PRESENCE.idleSmallImageKey,
+            smallImageText: PRESENCE.idleSmallImageText,
+            ...(this.repositoryUrl
+                ? {
+                      buttons: [
+                          {
+                              label: PRESENCE.repositoryButtonLabel,
+                              url: this.repositoryUrl,
+                          },
+                      ],
+                  }
+                : {}),
+        });
+    }
+
+    private async refreshRepositoryInfo(workspaceFolderPath: string | null) {
+        if (!workspaceFolderPath) {
+            this.repositoryUrl = null;
+            this.repositoryName = null;
+            return;
+        }
+
+        try {
+            const git = simpleGit(workspaceFolderPath);
+            const isRepo = await git.checkIsRepo();
+
+            if (!isRepo) {
+                this.repositoryUrl = null;
+                this.repositoryName = null;
+                return;
+            }
+
+            const remoteUrl = await git.remote(['get-url', 'origin']);
+            const remoteUrlValue = typeof remoteUrl === 'string' ? remoteUrl.trim() : '';
+
+            if (!remoteUrlValue) {
+                this.repositoryUrl = null;
+                this.repositoryName = null;
+                return;
+            }
+
+            const normalizedUrl = this.normalizeRepositoryUrl(remoteUrlValue);
+
+            this.repositoryUrl = normalizedUrl;
+            this.repositoryName = this.getRepositoryName(normalizedUrl);
+        } catch {
+            this.repositoryUrl = null;
+            this.repositoryName = null;
+        }
+    }
+
+    private normalizeRepositoryUrl(url: string): string {
+        if (url.startsWith('git@')) {
+            const trimmed = url.replace(/^git@/, '');
+            const [host, ...pathParts] = trimmed.split(':');
+
+            if (!host || pathParts.length === 0) {
+                return url;
+            }
+
+            const path = pathParts.join(':').replace(/\.git$/, '');
+            return `https://${host}/${path}`;
+        }
+
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+            return url.replace(/\.git$/, '');
+        }
+
+        return url;
+    }
+
+    private getRepositoryName(url: string): string {
+        const stripped = url.replace(/\.git$/, '').replace(/\/+$/, '');
+        const segments = stripped.split('/').filter(Boolean);
+
+        if (segments.length >= 2) {
+            return `${segments[segments.length - 2]}/${segments[segments.length - 1]}`;
+        }
+
+        return stripped;
     }
 }
